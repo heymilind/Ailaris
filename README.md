@@ -1,2 +1,1 @@
-# Ailaris
-A mission to accomplish
+<project-name>-git-<branch-name>-<scope-slug>.vercel.app;
