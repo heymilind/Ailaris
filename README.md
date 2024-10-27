@@ -6,6 +6,8 @@
     <title>Allaris Journey</title>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Poppins:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <project-name>-git-<branch-name>-<scope-slug>.vercel.app;
+
 </head>
 <body>
     <div class="page" id="page1">
