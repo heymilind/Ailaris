@@ -402,7 +402,8 @@
     </div>
 
     <script>
-       const menuBtn = document.getElementById('menuBtn');
+// Menu Toggle with proper transitions
+const menuBtn = document.getElementById('menuBtn');
 const sideNav = document.getElementById('sideNav');
 const contentWrapper = document.getElementById('contentWrapper');
 let isMenuOpen = false;
@@ -423,17 +424,3 @@ document.addEventListener('click', (e) => {
         menuBtn.click();
     }
 });
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    if (isMenuOpen) {
-                        setTimeout(() =>
