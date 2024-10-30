@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milind Chand Boro - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lexend Mega', sans-serif;
+        }
+
+        body {
+            background-color: #fef08a;
+        }
+
+        .nav {
+            background-color: #f472b6;
+            padding: 1rem;
+            border: 4px solid black;
+            box-shadow: 4px 4px 0 black;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            background: white;
+            border: 4px solid black;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .hero {
+            padding: 8rem 1rem 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .bio {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .bio-card {
+            background: white;
+            border: 4px solid black;
+            box-shadow: 8px 8px 0 black;
+            padding: 2rem;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .marquee {
+            background: #22d3ee;
+            padding: 1rem;
+            border: 4px solid black;
+            box-shadow: 4px 4px 0 black;
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .projects {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border: 4px solid black;
+            box-shadow: 8px 8px 0 black;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 black;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #f472b6;
+            padding: 0.5rem 1rem;
+            border: 3px solid black;
+            margin-bottom: 1rem;
+        }
+
+        .contact {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-btn {
+            background: white;
+            border: 4px solid black;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 4px 4px 0 black;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 black;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">Milind Chand Boro</div>
+            <button class="menu-btn" id="menuBtn">MENU</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>FRONTEND<br>DEVELOPER<br>& ENTREPRENEUR</h1>
+        <p>Building digital experiences while pursuing startup dreams</p>
+    </section>
+
+    <section class="bio">
+        <div class="bio-card">
+            <div class="tag">About Me</div>
+            <p>Hi, I'm Milind Chand Boro, a frontend developer with a passion for project management and entrepreneurship. My journey is driven by the dream of founding my own startup, and I'm constantly working to expand my knowledge and skills to achieve this goal.</p>
+            <br>
+            <p>I've invested in over 70 books and 40 online courses to build a strong foundation in technology and business. Despite facing challenges with procrastination, I've successfully completed 20 books and am actively engaged in 10 courses across platforms like Domestika, Udemy, EDX, and Coursera.</p>
+            <br>
+            <p>Currently, I'm enhancing my creative skills at Arena Animate, Zoo Road Guwahati, while simultaneously developing my technical expertise in web development. My approach combines structured learning with practical application, as I work to overcome challenges and move closer to my entrepreneurial goals.</p>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            AVAILABLE FOR COLLABORATION — CURRENTLY LEARNING AT ARENA ANIMATE, GUWAHATI — 
+            PASSIONATE ABOUT PROJECT MANAGEMENT & ENTREPRENEURSHIP —
+        </div>
+    </div>
+
+    <section class="projects">
+        <div class="project-card">
+            <div class="tag">Learning Progress</div>
+            <h3>Books Journey</h3>
+            <p>20/70 books completed in personal development and technical knowledge</p>
+        </div>
+        <div class="project-card">
+            <div class="tag">Education</div>
+            <h3>Arena Animate</h3>
+            <p>Professional animation training at Zoo Road, Guwahati</p>
+        </div>
+        <div class="project-card">
+            <div class="tag">Courses</div>
+            <h3>Online Learning</h3>
+            <p>Currently taking 10/40 courses on multiple platforms</p>
+        </div>
+    </section>
+
+    <section class="projects">
+        <div class="project-card">
+            <div class="tag">Platforms</div>
+            <h3>Active Learning</h3>
+            <p>Domestika • Udemy • EDX • Coursera</p>
+        </div>
+        <div class="project-card">
+            <div class="tag">Growth</div>
+            <h3>Personal Development</h3>
+            <p>Overcoming procrastination through structured learning</p>
+        </div>
+        <div class="project-card">
+            <div class="tag">Vision</div>
+            <h3>Future Goals</h3>
+            <p>Aspiring to found a startup and master project management</p>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h2>Let's Connect!</h2>
+        <div class="social-links">
+            <button class="social-btn">Email</button>
+            <button class="social-btn">LinkedIn</button>
+            <button class="social-btn">GitHub</button>
+        </div>
+    </section>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            menuBtn.textContent = isMenuOpen ? 'CLOSE' : 'MENU';
+        });
+
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translate(-4px, -4px)';
+                card.style.boxShadow = '12px 12px 0 black';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'none';
+                card.style.boxShadow = '8px 8px 0 black';
+            });
+        });
+    </script>
+</body>
+</html>
