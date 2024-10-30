@@ -402,26 +402,27 @@
     </div>
 
     <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const sideNav = document.getElementById('sideNav');
-        const contentWrapper = document.getElementById('contentWrapper');
-        let isMenuOpen = false;
+       const menuBtn = document.getElementById('menuBtn');
+const sideNav = document.getElementById('sideNav');
+const contentWrapper = document.getElementById('contentWrapper');
+let isMenuOpen = false;
 
-        menuBtn.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            menuBtn.textContent = isMenuOpen ? 'CLOSE' : 'MENU';
-            sideNav.classList.toggle('open');
-            contentWrapper.classList.toggle('pushed');
-        });
+menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isMenuOpen = !isMenuOpen;
+    menuBtn.textContent = isMenuOpen ? 'CLOSE' : 'MENU';
+    sideNav.classList.toggle('open');
+    contentWrapper.classList.toggle('pushed');
+});
 
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && 
-                !sideNav.contains(e.target) && 
-                !menuBtn.contains(e.target)) {
-                menuBtn.click();
-            }
-        });
-
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (isMenuOpen && 
+        !sideNav.contains(e.target) && 
+        !menuBtn.contains(e.target)) {
+        menuBtn.click();
+    }
+});
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
