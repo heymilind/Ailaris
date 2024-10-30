@@ -282,11 +282,12 @@
             box-shadow: 8px 8px 0 black;
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .content-wrapper.pushed {
-                transform: translateX(-100%);
-            }
+       @media (max-width: 768px) {
+    .side-nav {
+        width: 100%;
+        right: -100%; /* For mobile, use -100% */
+    }
+}
 
             .side-nav {
                 width: 100%;
