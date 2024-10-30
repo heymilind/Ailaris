@@ -48,6 +48,9 @@
             border: 4px solid black;
             box-shadow: 4px 4px 0 black;
             position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             z-index: 100;
         }
@@ -58,6 +61,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 1rem;
         }
 
         .logo {
@@ -84,8 +88,8 @@
         .side-nav {
             position: fixed;
             top: 0;
-            right: -300px;
-            width: 300px;
+            right: -100%;
+            width: 100%;
             height: 100vh;
             background: white;
             border-left: 4px solid black;
@@ -96,7 +100,7 @@
         }
 
         .side-nav.open {
-            transform: translateX(-300px);
+            transform: translateX(-100%);
         }
 
         .nav-link {
@@ -121,11 +125,11 @@
         /* Main Content */
         .content-wrapper {
             transition: transform 0.3s ease;
-            padding-top: 60px;
+            padding-top: 80px; /* Increased to account for fixed nav */
         }
 
         .content-wrapper.pushed {
-            transform: translateX(-300px);
+            transform: translateX(-100%);
         }
 
         /* Hero Section */
@@ -272,24 +276,26 @@
             font-weight: bold;
         }
 
+        @media (min-width: 769px) {
+            .side-nav {
+                width: 300px;
+                right: -300px;
+            }
+
+            .side-nav.open {
+                transform: translateX(-300px);
+            }
+
+            .content-wrapper.pushed {
+                transform: translateX(-300px);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-content .logo {
                 font-size: 1.2rem;
             }
             
-            .side-nav {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .side-nav.open {
-                transform: translateX(-100%);
-            }
-            
-            .content-wrapper.pushed {
-                transform: translateX(-100%);
-            }
-
             .social-links {
                 flex-direction: column;
                 align-items: center;
@@ -305,6 +311,13 @@
 <body>
     <div class="dot-pattern"></div>
 
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">Milind Chand Boro</div>
+            <button class="menu-btn" id="menuBtn">MENU</button>
+        </div>
+    </nav>
+
     <div class="side-nav" id="sideNav">
         <a href="#home" class="nav-link">Home</a>
         <a href="#bio" class="nav-link">About Me</a>
@@ -314,13 +327,6 @@
     </div>
 
     <div class="content-wrapper" id="contentWrapper">
-        <nav class="nav">
-            <div class="nav-content">
-                <div class="logo">Milind Chand Boro</div>
-                <button class="menu-btn" id="menuBtn">MENU</button>
-            </div>
-        </nav>
-
         <section class="hero" id="home">
             <div class="container">
                 <h1>FRONTEND<br>DEVELOPER<br>& ENTREPRENEUR</h1>
@@ -429,7 +435,12 @@
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    targetElement.scrollIntoView({
+                    const navHeight = document.querySelector('.nav').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    
+                    
+                    window.scrollTo({
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
                     
