@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #f5f6fa;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-middle {
+            flex-grow: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background-color: #f9fafb;
+            transition: all 0.2s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #4444ff;
+            background-color: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f3f4f6;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-icon:hover {
+            background-color: #e5e7eb;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4444ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Existing styles remain the same */
+        .sidebar {
+            background-color: #000;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .sidebar-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4444ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Rest of your existing styles remain the same */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .trend.up {
+            color: #22c55e;
+        }
+
+        .trend.down {
+            color: #ef4444;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .table-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            background-color: #86efac;
+            color: #166534;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-icon">A</div>
+            <div class="sidebar-icon">□</div>
+            <div class="sidebar-icon">○</div>
+            <div class="sidebar-icon">↻</div>
+            <div class="sidebar-icon">☺</div>
+            <div class="sidebar-icon">⚙</div>
+        </div>
+        <div style="overflow: hidden;">
+            <!-- New Navigation Bar -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <div class="title">Analytics ✌️</div>
+                </div>
+                <div class="nav-middle">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search anything..." />
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-icon">🔔</div>
+                    <div class="nav-icon">✉️</div>
+                    <div class="profile-icon">JD</div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Total Revenue</div>
+                        <div class="stat-value">$4,562</div>
+                        <div class="trend up">+12% vs previous 28 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Visitors</div>
+                        <div class="stat-value">$2,562</div>
+                        <div class="trend up">+4% vs previous 28 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Transactions</div>
+                        <div class="stat-value">$2,262</div>
+                        <div class="trend down">-0.89% vs previous 28 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Products</div>
+                        <div class="stat-value">$2,100</div>
+                        <div class="trend up">+2% vs previous 28 days</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 style="margin-bottom: 1rem;">Sales Funnel</h3>
+                        <canvas id="salesFunnelChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 style="margin-bottom: 1rem;">Sales by Category</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Recent Invoices</h3>
+                        <button style="padding: 0.5rem; border-radius: 6px; border: 1px solid #ddd; background: white;">Filter & Sort</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>ID CUSTOMER</th>
+                                <th>CUSTOMER NAME</th>
+                                <th>CUSTOMER ADDRESS</th>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>STATUS</th>
+                                <th>AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>#065499</td>
+                                <td>Jannatul Firdous</td>
+                                <td>089 Munni ka kotha Apt. 448</td>
+                                <td>30 oct 2024</td>
+                                <td>Bari thaka hijira </td>
+                                <td><span class="status-badge">Completed</span></td>
+                                <td>₹700</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sales Funnel Chart
+        const salesFunnelCtx = document.getElementById('salesFunnelChart').getContext('2d');
+        new Chart(salesFunnelCtx, {
+            type: 'line',
+            data: {
+                labels: ['Total Market', 'Prospects', 'Leads', 'Sales'],
+                datasets: [{
+                    label: 'Sales Funnel',
+                    data: [4562, 2562, 1262, 1000],
+                    fill: true,
+                    backgroundColor: 'rgba(67, 56, 202, 0.1)',
+                    borderColor: 'rgba(67, 56, 202, 1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Clothing', 'Body Fit', 'Sportswear'],
+                datasets: [{
+                    data: [25, 35, 40],
+                    backgroundColor: [
+                        'rgba(67, 56, 202, 1)',
+                        'rgba(67, 56, 202, 0.7)',
+                        'rgba(67, 56, 202, 0.4)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // Make stats interactive
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseover', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'transform 0.2s ease';
+                card.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            });
+
+            card.addEventListener('mouseout', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Make search bar interactive
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.style.boxShadow = '0 0 0 2px rgba(68, 68, 255, 0.2)';
+        });
+
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.style.boxShadow = 'none';
+        });
+
+        // Make nav icons interactive
+        document.querySelectorAll('.nav-icon, .profile-icon').forEach(icon => {
+            icon.addEventListener('mouseover', () => {
+                icon.style.transform = 'scale(1.1)';
+                icon.style.transition = 'transform 0.2s ease';
+            });
+
+            icon.addEventListener('mouseout', () => {
+                icon.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
