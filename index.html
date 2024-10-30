@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milind Chand Boro - Portfolio</title>
     <style>
+        /* Root Variables for Fluid Design */
+        :root {
+            --padding-inline: clamp(1rem, 5vw, 3rem);
+            --content-width: min(100% - 2rem, 1200px);
+            --font-size-base: clamp(1rem, 1vw + 0.5rem, 1.2rem);
+            --font-size-heading: clamp(2rem, 5vw + 1rem, 4rem);
+            --font-size-subheading: clamp(1.5rem, 3vw + 0.5rem, 2.5rem);
+            --spacing-base: clamp(1rem, 3vw, 2rem);
+            --card-min-width: min(100%, 300px);
+        }
+
+        /* Base Styles */
         @import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700&display=swap');
         
         * {
@@ -14,13 +26,20 @@
             font-family: 'Lexend Mega', sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: #fef08a;
             position: relative;
             overflow-x: hidden;
             min-height: 100vh;
+            font-size: var(--font-size-base);
+            line-height: 1.6;
         }
 
+        /* Background Pattern */
         .dot-pattern {
             position: fixed;
             top: 0;
@@ -34,26 +53,21 @@
             pointer-events: none;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            width: 100%;
-        }
-
         /* Navigation */
         .nav {
             background-color: #f472b6;
-            padding: 1rem;
-            border: 4px solid black;
-            box-shadow: 4px 4px 0 black;
+            padding: 1rem var(--padding-inline);
+            border-bottom: 4px solid black;
+            box-shadow: 0 4px 0 black;
             position: fixed;
             width: 100%;
             z-index: 100;
+            top: 0;
+            left: 0;
         }
 
         .nav-content {
-            max-width: 1200px;
+            max-width: var(--content-width);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -62,8 +76,11 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 2vw + 0.5rem, 1.5rem);
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .menu-btn {
@@ -71,9 +88,9 @@
             border: 4px solid black;
             padding: 0.5rem 1rem;
             cursor: pointer;
+            font-weight: bold;
             transition: all 0.3s ease;
             z-index: 1000;
-            font-weight: bold;
         }
 
         .menu-btn:hover {
@@ -85,19 +102,19 @@
         .side-nav {
             position: fixed;
             top: 0;
-            right: -300px;
-            width: 300px;
+            right: -100%;
+            width: min(100%, 300px);
             height: 100vh;
             background: white;
             border-left: 4px solid black;
             box-shadow: -4px 0 0 black;
-            padding-top: 80px;
+            padding-top: 100px;
             transition: transform 0.3s ease;
             z-index: 90;
         }
 
         .side-nav.open {
-            transform: translateX(-300px);
+            transform: translateX(-100%);
         }
 
         .nav-link {
@@ -119,10 +136,10 @@
             box-shadow: 8px 8px 0 black;
         }
 
-        /* Main Content */
+        /* Content Wrapper */
         .content-wrapper {
+            padding-top: calc(60px + var(--spacing-base));
             transition: transform 0.3s ease;
-            padding-top: 60px;
         }
 
         .content-wrapper.pushed {
@@ -131,36 +148,39 @@
 
         /* Hero Section */
         .hero {
-            padding: 6rem 1rem 4rem;
+            min-height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: var(--spacing-base);
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            margin-bottom: 1rem;
+            font-size: var(--font-size-heading);
             line-height: 1.2;
+            margin-bottom: var(--spacing-base);
         }
 
         .hero p {
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            opacity: 0.8;
+            font-size: clamp(1rem, 2vw + 0.5rem, 1.5rem);
+            opacity: 0.9;
         }
 
         /* Bio Section */
         .bio {
-            padding: 2rem 1rem;
+            padding: var(--spacing-base);
+            margin-bottom: var(--spacing-base);
         }
 
         .bio-card {
             background: white;
             border: 4px solid black;
             box-shadow: 8px 8px 0 black;
-            padding: 2rem;
-            text-align: left;
-            line-height: 1.6;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            max-width: 1200px;
+            padding: var(--spacing-base);
+            max-width: var(--content-width);
             margin: 0 auto;
+            line-height: 1.7;
         }
 
         /* Marquee */
@@ -171,8 +191,8 @@
             box-shadow: 4px 4px 0 black;
             white-space: nowrap;
             overflow: hidden;
-            margin: 2rem auto;
-            max-width: 1200px;
+            margin: var(--spacing-base) auto;
+            max-width: var(--content-width);
         }
 
         .marquee-content {
@@ -185,30 +205,33 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Projects Section */
+        /* Projects Grid */
         .projects {
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: var(--spacing-base);
+            margin-bottom: var(--spacing-base);
+        }
+
+        .section-header {
+            font-size: var(--font-size-subheading);
+            text-align: center;
+            margin-bottom: var(--spacing-base);
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: var(--spacing-base);
+            max-width: var(--content-width);
+            margin: 0 auto;
         }
 
         .project-card {
             background: white;
             border: 4px solid black;
             box-shadow: 8px 8px 0 black;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+            padding: var(--spacing-base);
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            transition: all 0.3s ease;
         }
 
         .project-card:hover {
@@ -227,23 +250,17 @@
 
         /* Contact Section */
         .contact {
-            padding: 4rem 1rem;
-            text-align: center;
-            max-width: 1200px;
+            padding: calc(var(--spacing-base) * 2);
             margin: 0 auto;
-        }
-
-        .contact h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 2rem;
+            max-width: var(--content-width);
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: var(--spacing-base);
             flex-wrap: wrap;
-            padding: 1rem;
+            margin-top: var(--spacing-base);
         }
 
         .social-btn {
@@ -256,7 +273,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: black;
-            min-width: 160px;
+            min-width: clamp(140px, 30vw, 200px);
             text-align: center;
         }
 
@@ -265,30 +282,14 @@
             box-shadow: 8px 8px 0 black;
         }
 
-        /* Section Headers */
-        .section-header {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            margin-bottom: 2rem;
-            text-align: center;
-            font-weight: bold;
-        }
-
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .nav-content .logo {
-                font-size: 1.2rem;
-            }
-            
-            .side-nav {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .side-nav.open {
-                transform: translateX(-100%);
-            }
-            
             .content-wrapper.pushed {
                 transform: translateX(-100%);
+            }
+
+            .side-nav {
+                width: 100%;
             }
 
             .social-links {
@@ -323,8 +324,8 @@
         </nav>
 
         <section class="hero" id="home">
-            <div class="container">
-                <h1>FRONTEND<br>DEVELOPER<br>& ENTREPRENEUR</h1>
+            <div>
+                <h1>FRONTEND<br>DEVELOPER<br>& ASPIRING<br>ENTREPRENEUR</h1>
                 <p>Building digital experiences while pursuing startup dreams</p>
             </div>
         </section>
@@ -400,7 +401,6 @@
     </div>
 
     <script>
-        // Menu Toggle
         const menuBtn = document.getElementById('menuBtn');
         const sideNav = document.getElementById('sideNav');
         const contentWrapper = document.getElementById('contentWrapper');
@@ -413,7 +413,6 @@
             contentWrapper.classList.toggle('pushed');
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (isMenuOpen && 
                 !sideNav.contains(e.target) && 
@@ -422,7 +421,6 @@
             }
         });
 
-        // Smooth scroll for navigation links
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -431,30 +429,9 @@
                 
                 if (targetElement) {
                     targetElement.scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                     
-                    // Close menu after clicking a link
                     if (isMenuOpen) {
-                        setTimeout(() => menuBtn.click(), 500);
-                    }
-                }
-            });
-        });
-
-        // Project card hover animations
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translate(-4px, -4px)';
-                card.style.boxShadow = '12px 12px 0 black';
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'none';
-                card.style.boxShadow = '8px 8px 0 black';
-            });
-        });
-    </script>
-</body>
-</html>
+                        setTimeout(() =>
